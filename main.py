@@ -29,6 +29,8 @@ async def text_message(msg: Message):
     clocks = "🕛🕧🕐🕜🕑🕝🕒🕞🕓🕟🕔🕠🕕🕡🕖🕢🕗🕣🕘🕤🕙🕥🕚🕦"
 
     for i, card in enumerate(txt.split("\n")):
+        if not len(card):
+            continue
         try:
             valid = await validate_credit_card(card)
             x += valid
@@ -40,8 +42,8 @@ async def text_message(msg: Message):
             await new_msg.edit_text(h + "\n" + clocks[i % 24] + " проверка...")
             await asyncio.sleep(0.1)
         except Exception as e:
-            # await bot.send_message(msg.chat.id, f"⚠ Произошла ошибка в строке {i + 1}: <code>{e}</code>")
-            pass
+            await bot.send_message(msg.chat.id, f"⚠ Произошла ошибка в строке {i + 1}: <code>{e}</code>")
+            # pass
     await new_msg.edit_text("☑ Результаты\n\n" + z)
 
 
