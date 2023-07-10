@@ -10,7 +10,7 @@ dp = Dispatcher(bot)
 @dp.message_handler(commands=["start"])
 async def start(msg: Message):
     await msg.answer(
-        "Привет, добропожаловать. Пришлите мне номера карт. Один номер карты в строке. "
+        "👋 Привет, добро пожаловать. Отправьте номер каждой карты в отдельной строке. "
         "Вы можете отправить столько строк, сколько хотите. Например:\n\n"
         "<code>1234 5678 9012 3456\n4254-5478-9012-3756\n4244.5488.9012.3556</code>")
 
@@ -37,8 +37,8 @@ async def text_message(msg: Message):
             s = f"{'✅' if valid else '🚫'} {fm}\n"
             h += s
             z += s
-            await new_msg.edit_text(h + clocks[i % 24] + " проверка...")
-            # await asyncio.sleep(0.1)
+            await new_msg.edit_text(h + "\n" + clocks[i % 24] + " проверка...")
+            await asyncio.sleep(0.1)
         except Exception as e:
             await bot.send_message(msg.chat.id, f"⚠ Произошла ошибка в строке {i + 1}: <code>{e}</code>")
     await new_msg.edit_text("☑ Результаты\n\n" + z)
