@@ -11,6 +11,8 @@ async def format_number(card_num):
 
 
 async def validate_credit_card(card_number: str) -> bool:
+    if len(str) != 16:
+        return False
     card_number = [int(num) for num in card_number]
     check_igit = card_number.pop(-1)
     card_number.reverse()

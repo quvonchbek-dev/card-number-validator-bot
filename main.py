@@ -40,7 +40,8 @@ async def text_message(msg: Message):
             await new_msg.edit_text(h + "\n" + clocks[i % 24] + " проверка...")
             await asyncio.sleep(0.1)
         except Exception as e:
-            await bot.send_message(msg.chat.id, f"⚠ Произошла ошибка в строке {i + 1}: <code>{e}</code>")
+            # await bot.send_message(msg.chat.id, f"⚠ Произошла ошибка в строке {i + 1}: <code>{e}</code>")
+            pass
     await new_msg.edit_text("☑ Результаты\n\n" + z)
 
 
