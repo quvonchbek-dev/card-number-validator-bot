@@ -10,6 +10,16 @@ async def format_number(card_num):
     return res
 
 
+async def extract_card_num(s: str) -> str:
+    tmp = ""
+    for i in s:
+        if i.isdigit():
+            tmp += i
+        if len(tmp) == 16:
+            break
+    return tmp
+
+
 async def validate_credit_card(card_number: str) -> bool:
     if len(card_number) != 16:
         return False

@@ -1,7 +1,7 @@
 from aiogram.types import Message
 from aiogram import Bot, Dispatcher, executor
 import asyncio
-from validator import validate_credit_card, format_number
+from validator import validate_credit_card, format_number, extract_card_num
 
 bot = Bot("6353520619:AAG_cEw60h0nLQByk6emDALVaj2nGA7kgVo", parse_mode="html")
 dp = Dispatcher(bot)
@@ -18,17 +18,14 @@ async def start(msg: Message):
 @dp.message_handler(content_types=["text"])
 async def text_message(msg: Message):
     new_msg = await bot.send_message(msg.chat.id, "⌛ Сейчас проверяю...")
-    tmp = msg.text
-    txt = ""
-    for i in tmp:
-        if i == "\n" or i.isdigit():
-            txt += i
+    txt = msg.text
     x, y = 0, 0
     h = ''
     z = ""
     clocks = "🕛🕧🕐🕜🕑🕝🕒🕞🕓🕟🕔🕠🕕🕡🕖🕢🕗🕣🕘🕤🕙🕥🕚🕦"
 
     for i, card in enumerate(txt.split("\n")):
+        card = await extract_card_num(card)
         if not len(card):
             continue
         try:
@@ -39,8 +36,8 @@ async def text_message(msg: Message):
             s = f"{'✅' if valid else '🚫'} {fm}\n"
             h += s
             z += s
-            await new_msg.edit_text(h + "\n" + clocks[i % 24] + " проверка...")
-            await asyncio.sleep(0.1)
+            # await new_msg.edit_text(h + "\n" + clocks[i % 24] + " проверка...")
+            # await asyncio.sleep(0.1)
         except Exception as e:
             await bot.send_message(msg.chat.id, f"⚠ Произошла ошибка в строке {i + 1}: <code>{e}</code>")
             # pass
